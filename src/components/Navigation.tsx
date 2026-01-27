@@ -1,36 +1,161 @@
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const links = [
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
+  { label: "Contact", href: "#contact" },
+];
+
 export default function Navigation() {
+  const [open, setOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+
+  // Close on ESC
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  // Close on click outside
+  useEffect(() => {
+    function onMouseDown(e: MouseEvent) {
+      if (!open) return;
+      const target = e.target as Node;
+      if (panelRef.current && !panelRef.current.contains(target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", onMouseDown);
+    return () => document.removeEventListener("mousedown", onMouseDown);
+  }, [open]);
+
+  // Prevent background scroll when menu is open
+  useEffect(() => {
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/70 backdrop-blur-xl">
       <div className="container-custom flex h-16 items-center justify-between">
-        {/* Logo / Name */}
-        <a href="#top" className="font-semibold tracking-tight hover:opacity-90 transition">
+        <a
+          href="#top"
+          className="font-semibold tracking-tight hover:opacity-90 transition"
+          onClick={() => setOpen(false)}
+        >
           Linnea
         </a>
 
         {/* Desktop links */}
         <nav className="hidden items-center gap-6 md:flex">
-          <a className="text-sm text-muted-foreground hover:text-foreground transition" href="#about">
-            About
-          </a>
-          <a className="text-sm text-muted-foreground hover:text-foreground transition" href="#projects">
-            Projects
-          </a>
-          <a className="text-sm text-muted-foreground hover:text-foreground transition" href="#contact">
-            Contact
-          </a>
+          {links.map((l) => (
+            <a
+              key={l.href}
+              className="text-sm text-muted-foreground hover:text-foreground transition"
+              href={l.href}
+            >
+              {l.label}
+            </a>
+          ))}
 
           <Button variant="glow" size="sm" asChild>
             <a href="#contact">Let&apos;s talk</a>
           </Button>
         </nav>
 
-        {/* Mobile button (vi gör meny + animation strax) */}
-        <Button className="md:hidden" variant="ghost" size="sm">
-          Menu
+        {/* Mobile toggle */}
+        <Button
+          className="md:hidden"
+          variant="ghost"
+          size="icon"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
       </div>
+
+      {/* Mobile dropdown */}
+      <AnimatePresence>
+        {open && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40 bg-black/40 md:hidden"
+            />
+
+            <motion.div
+              ref={panelRef}
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="absolute left-0 right-0 z-50 md:hidden"
+            >
+              <div className="border-b border-border/50 bg-background/90 backdrop-blur-xl">
+                <div className="container-custom py-6">
+                  <motion.nav
+                    initial="hidden"
+                    animate="show"
+                    exit="hidden"
+                    variants={{
+                      hidden: {},
+                      show: {
+                        transition: { staggerChildren: 0.06, delayChildren: 0.04 },
+                      },
+                    }}
+                    className="flex flex-col gap-4"
+                  >
+                    {links.map((l) => (
+                      <motion.a
+                        key={l.href}
+                        variants={{
+                          hidden: { opacity: 0, y: -6 },
+                          show: { opacity: 1, y: 0 },
+                        }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="text-lg font-medium text-foreground/90 hover:text-foreground transition"
+                        href={l.href}
+                        onClick={() => setOpen(false)}
+                      >
+                        {l.label}
+                      </motion.a>
+                    ))}
+
+                    <motion.div
+                      variants={{
+                        hidden: { opacity: 0, y: -6 },
+                        show: { opacity: 1, y: 0 },
+                      }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      className="pt-2"
+                    >
+                      <Button variant="glow" size="lg" className="w-full" asChild>
+                        <a href="#contact" onClick={() => setOpen(false)}>
+                          Let&apos;s talk
+                        </a>
+                      </Button>
+                    </motion.div>
+                  </motion.nav>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
