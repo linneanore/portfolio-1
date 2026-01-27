@@ -1,8 +1,7 @@
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Menu, X } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const links = [
@@ -112,17 +111,28 @@ useEffect(() => {
     );
   })}
      <Button
-    variant="ghost"
-    size="icon"
-    aria-label="Toggle theme"
-    onClick={toggleTheme}
+  variant="ghost"
+  size="icon"
+  aria-label="Toggle theme"
+  onClick={toggleTheme}
+>
+  <AnimatePresence mode="wait" initial={false}>
+    <motion.span
+      key={theme}
+      initial={{ opacity: 0, rotate: -90, scale: 0.85 }}
+      animate={{ opacity: 1, rotate: 0, scale: 1 }}
+      exit={{ opacity: 0, rotate: 90, scale: 0.85 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="inline-flex"
     >
       {theme === "dark" ? (
         <Sun className="h-4 w-4" />
       ) : (
         <Moon className="h-4 w-4" />
       )}
-    </Button>
+    </motion.span>
+  </AnimatePresence>
+</Button>
 
   <Button variant="glow" size="sm" asChild>
     <a href="#contact">Let&apos;s talk</a>
