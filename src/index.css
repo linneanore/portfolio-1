@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    --background: 225 25% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 225 25% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 225 25% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 175 80% 50%;
+    --primary-foreground: 225 25% 5%;
+
+    --secondary: 225 20% 12%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 225 20% 15%;
+    --muted-foreground: 215 20% 55%;
+
+    --accent: 260 60% 60%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 225 20% 18%;
+    --input: 225 20% 15%;
+    --ring: 175 80% 50%;
+
+    --radius: 0.75rem;
+  }
+
+  * { @apply border-border; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-gradient { @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent; }
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .glass { @apply bg-card/50 backdrop-blur-xl border border-border/50; }
+  .section-padding { @apply py-24 md:py-32; }
+  .container-custom { @apply max-w-6xl mx-auto px-6; }
+}
