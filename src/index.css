@@ -42,6 +42,9 @@
   * { @apply border-border; }
 
   html { scroll-behavior: smooth; }
+  :target {
+    scroll-margin-top: 96px;
+  }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
