@@ -1,17 +1,46 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const links = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { label: "Top", href: "#top", id: "top" },
+  { label: "About", href: "#about", id: "about" },
+  { label: "Projects", href: "#about", id: "about" },
+  { label: "Contact", href:"#projects", id: "projects" },
 ];
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
+
+  const [activeId, setActiveId] = useState<string>("top");
+  const sectionIds = useMemo (() => ["top", "about", "projects", "contact"], []);
+
+  useEffect(() => {
+    const elements = sectionIds
+    .map ((id) => document.getElementById(id))
+    .filter(Boolean) as HTMLElement[];
+
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+        if (visible?.target?.id) setActiveId(visible.target.id);
+      },
+      {
+        root: null,
+        rootMargin: "-35% 0px -55% 0px",
+        threshold: [0.1, 0.2, 0.35, 0.5, 0.75],
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [sectionIds]);
 
   // Close on ESC
   useEffect(() => {
@@ -55,22 +84,38 @@ export default function Navigation() {
           Linnea
         </a>
 
-        {/* Desktop links */}
-        <nav className="hidden items-center gap-6 md:flex">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              className="text-sm text-muted-foreground hover:text-foreground transition"
-              href={l.href}
-            >
-              {l.label}
-            </a>
-          ))}
+       {/* Desktop links */}
+<nav className="hidden items-center gap-6 md:flex">
+  {links.map((l) => {
+    const isActive = activeId === l.id;
 
-          <Button variant="glow" size="sm" asChild>
-            <a href="#contact">Let&apos;s talk</a>
-          </Button>
-        </nav>
+    return (
+      <a
+        key={l.href}
+        href={l.href}
+        className={[
+          "relative text-sm transition",
+          isActive
+            ? "text-foreground"
+            : "text-muted-foreground hover:text-foreground",
+        ].join(" ")}
+      >
+        {l.label}
+
+        <span
+          className={[
+            "pointer-events-none absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-primary transition-opacity",
+            isActive ? "opacity-100" : "opacity-0",
+          ].join(" ")}
+        />
+      </a>
+    );
+  })}
+
+  <Button variant="glow" size="sm" asChild>
+    <a href="#contact">Let&apos;s talk</a>
+  </Button>
+</nav>
 
         {/* Mobile toggle */}
         <Button
@@ -127,7 +172,9 @@ export default function Navigation() {
                           show: { opacity: 1, y: 0 },
                         }}
                         transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="text-lg font-medium text-foreground/90 hover:text-foreground transition"
+                        className={["text-lg font-medium transition",
+                          activeId == l.id ? "text-foreground" : "text-foreground/90 hover:text-foreground",
+                        ].join(" ")}
                         href={l.href}
                         onClick={() => setOpen(false)}
                       >
