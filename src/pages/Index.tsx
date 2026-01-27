@@ -5,6 +5,7 @@ import About from "@/components/About";
 import TechStack from "@/components/TechStack";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function Index() {
   return (
@@ -20,6 +21,7 @@ export default function Index() {
       </main>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }
