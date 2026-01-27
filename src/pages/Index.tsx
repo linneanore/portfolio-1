@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
 import TechStack from "@/components/TechStack";
+import Contact from "@/components/Contact";
 
 export default function Index() {
   return (
@@ -14,6 +15,7 @@ export default function Index() {
         <Projects />
         <About />
         <TechStack />
+        <Contact />
       </main>
     </div>
   );
