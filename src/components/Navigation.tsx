@@ -1,3 +1,5 @@
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "@/hooks/useTheme";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -13,7 +15,7 @@ const links = [
 export default function Navigation() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
-
+  const { theme, toggleTheme } = useTheme();
   const [activeId, setActiveId] = useState ("top");
 
 useEffect(() => {
@@ -109,6 +111,18 @@ useEffect(() => {
       </a>
     );
   })}
+     <Button
+    variant="ghost"
+    size="icon"
+    aria-label="Toggle theme"
+    onClick={toggleTheme}
+    >
+      {theme === "dark" ? (
+        <Sun className="h-4 w-4" />
+      ) : (
+        <Moon className="h-4 w-4" />
+      )}
+    </Button>
 
   <Button variant="glow" size="sm" asChild>
     <a href="#contact">Let&apos;s talk</a>
@@ -182,6 +196,15 @@ useEffect(() => {
                         {l.label}
                       </motion.a>
                     ))}
+
+                    <Button
+                     variant="ghost"
+                    size="lg"
+                    className="w-full"
+                    onClick={toggleTheme}
+                    >
+                   {theme === "dark" ? "Light mode" : "Dark mode"}
+                  </Button>
 
                     <motion.div
                       variants={{
