@@ -13,8 +13,8 @@ export default function Index() {
 
       <main>
         <Hero />
-        <Projects />
         <About />
+        <Projects />
         <TechStack />
         <Contact />
       </main>

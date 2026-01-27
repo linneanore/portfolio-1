@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,41 +6,38 @@ import { Button } from "@/components/ui/button";
 const links = [
   { label: "Top", href: "#top", id: "top" },
   { label: "About", href: "#about", id: "about" },
-  { label: "Projects", href: "#about", id: "about" },
-  { label: "Contact", href:"#projects", id: "projects" },
+  { label: "Projects", href: "#projects", id: "projects" },
+  { label: "Contact", href:"#contact", id: "contact" },
 ];
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
 
-  const [activeId, setActiveId] = useState<string>("top");
-  const sectionIds = useMemo (() => ["top", "about", "projects", "contact"], []);
+  const [activeId, setActiveId] = useState ("top");
 
-  useEffect(() => {
-    const elements = sectionIds
-    .map ((id) => document.getElementById(id))
-    .filter(Boolean) as HTMLElement[];
+useEffect(() => {
+  const headerOffset = 80; 
 
-    if (!elements.length) return;
+  function updateActive() {
+    const scrollPos = window.scrollY + headerOffset;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-        .filter((e) => e.isIntersecting)
-        .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
-        if (visible?.target?.id) setActiveId(visible.target.id);
-      },
-      {
-        root: null,
-        rootMargin: "-35% 0px -55% 0px",
-        threshold: [0.1, 0.2, 0.35, 0.5, 0.75],
-      }
-    );
+    let current = "top";
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [sectionIds]);
+    for (const l of links) {
+      const el = document.getElementById(l.id);
+      if (!el) continue;
+
+      if (scrollPos >= el.offsetTop) current = l.id;
+    }
+
+    setActiveId(current);
+  }
+
+  updateActive();
+  window.addEventListener("scroll", updateActive, { passive: true });
+  return () => window.removeEventListener("scroll", updateActive);
+}, []);
 
   // Close on ESC
   useEffect(() => {
@@ -91,6 +88,7 @@ export default function Navigation() {
 
     return (
       <a
+      onClick={() => setActiveId(l.id)}
         key={l.href}
         href={l.href}
         className={[
@@ -124,7 +122,7 @@ export default function Navigation() {
           size="icon"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => setOpen(false)}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </Button>
@@ -176,7 +174,10 @@ export default function Navigation() {
                           activeId == l.id ? "text-foreground" : "text-foreground/90 hover:text-foreground",
                         ].join(" ")}
                         href={l.href}
-                        onClick={() => setOpen(false)}
+                        onClick={() => {
+                          setActiveId(l.id);
+                          setOpen(false);
+                        }}
                       >
                         {l.label}
                       </motion.a>
