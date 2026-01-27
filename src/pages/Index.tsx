@@ -4,6 +4,7 @@ import Projects from "@/components/Projects";
 import About from "@/components/About";
 import TechStack from "@/components/TechStack";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
 export default function Index() {
   return (
@@ -17,6 +18,8 @@ export default function Index() {
         <TechStack />
         <Contact />
       </main>
+
+      <Footer />
     </div>
   );
 }
