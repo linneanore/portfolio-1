@@ -1,20 +1,22 @@
 import { Github, Linkedin, Mail } from "lucide-react";
-
-const links = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
-];
-
-const socials = [
-  { label: "Email", href: "mailto:nore.linnea@hotmail.com", icon: Mail },
-  { label: "GitHub", href: "https://github.com/linneanore", icon: Github },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/linneanore/", icon: Linkedin },
-];
+import { useLanguage } from "@/context/language-context";
 
 export default function Footer() {
+  const { t } = useLanguage();
   const year = new Date().getFullYear();
+
+  const links = [
+    { label: t.nav.home, href: "#home" },
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.work, href: "#work" },
+    { label: t.nav.contact, href: "#contact" },
+  ];
+
+  const socials = [
+    { label: t.contact.buttons.email, href: "mailto:nore.linnea@hotmail.com", icon: Mail },
+    { label: t.contact.buttons.github, href: "https://github.com/linneanore", icon: Github },
+    { label: t.contact.buttons.linkedin, href: "https://www.linkedin.com/in/linneanore/", icon: Linkedin },
+  ];
 
   return (
     <footer className="relative overflow-hidden">
@@ -35,7 +37,7 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-8 sm:gap-12">
               <div>
                 <p className="text-xs font-medium tracking-widest text-muted-foreground mb-4">
-                  SECTIONS
+                  {t.footer.sections}
                 </p>
                 <ul className="space-y-3">
                   {links.map((l) => (
@@ -53,7 +55,7 @@ export default function Footer() {
 
               <div>
                 <p className="text-xs font-medium tracking-widest text-muted-foreground mb-4">
-                  CONNECT
+                  {t.footer.connect}
                 </p>
                 <ul className="space-y-3">
                   {socials.map((s) => {
@@ -80,11 +82,9 @@ export default function Footer() {
           {/* Bottom row */}
           <div className="mt-10 pt-6 border-t border-border/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <p className="text-xs text-muted-foreground">
-              © {year} Linnea. All rights reserved.
+              © {year} Linnea. {t.footer.rights}
             </p>
-            <p className="text-xs text-muted-foreground">
-              Built with React, TypeScript & Tailwind.
-            </p>
+            <p className="text-xs text-muted-foreground">{t.footer.built}</p>
           </div>
         </div>
       </div>

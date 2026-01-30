@@ -2,19 +2,20 @@ import { motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/hooks/useTheme";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/context/language-context";
 
 export default function Navigation() {
   const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
   const [show, setShow] = useState(true);
 
   const navItems = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Work", href: "#work" },
-    { label: "Contact", href: "#contact" },
+    { label: t.nav.home, href: "#home" },
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.work, href: "#work" },
+    { label: t.nav.contact, href: "#contact" },
   ];
 
-  
   useEffect(() => {
     let lastY = window.scrollY;
 
@@ -64,6 +65,31 @@ export default function Navigation() {
           </div>
 
           <div className="flex items-center gap-2 md:gap-4">
+            {/* Language toggle (Aurora-style) */}
+            <div className="glass rounded-full p-1 flex">
+              <button
+                onClick={() => setLanguage("en")}
+                className={`px-3 py-1 rounded-full text-xs transition ${
+                  language === "en"
+                    ? "bg-foreground text-background"
+                    : "text-muted-foreground"
+                }`}
+              >
+                EN
+              </button>
+
+              <button
+                onClick={() => setLanguage("sv")}
+                className={`px-3 py-1 rounded-full text-xs transition ${
+                  language === "sv"
+                    ? "bg-foreground text-background"
+                    : "text-muted-foreground"
+                }`}
+              >
+                SV
+              </button>
+            </div>
+
             {/* Theme Toggle */}
             <motion.button
               onClick={toggleTheme}

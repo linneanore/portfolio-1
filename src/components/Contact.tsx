@@ -1,28 +1,36 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail } from "lucide-react";
-
-const links = [
-  { label: "Email me", href: "mailto:nore.linnea@hotmail.com", icon: Mail, primary: true },
-  { label: "GitHub", href: "https://github.com/linneanore", icon: Github },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/linneanore/", icon: Linkedin },
-];
+import { useLanguage } from "@/context/language-context";
 
 export default function Contact() {
+  const { t } = useLanguage();
+
+  const links = [
+    {
+      label: t.contact.buttons.email,
+      href: "mailto:nore.linnea@hotmail.com",
+      icon: Mail,
+      primary: true,
+    },
+    { label: t.contact.buttons.github, href: "https://github.com/linneanore", icon: Github },
+    { label: t.contact.buttons.linkedin, href: "https://www.linkedin.com/in/linneanore/", icon: Linkedin },
+  ];
+
   return (
     <section id="contact" className="relative overflow-hidden">
       <div className="container-custom py-24 md:py-32 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs font-medium tracking-widest text-muted-foreground mb-4">
-            GET IN TOUCH
+            {t.contact.label}
           </p>
 
           <h2 className="text-4xl md:text-6xl font-display font-bold leading-tight">
-            Let’s build something together<span className="text-primary">.</span>
+            {t.contact.title}
+            <span className="text-primary">{t.contact.dot}</span>
           </h2>
 
           <p className="mt-5 text-muted-foreground text-base md:text-lg leading-relaxed">
-            I’m open to junior roles, internships, and collaborations. Feel free to reach
-            out if you’d like to talk tech, projects, or ideas.
+            {t.contact.intro}
           </p>
 
           <motion.div
@@ -41,8 +49,7 @@ export default function Contact() {
                 const primary =
                   "bg-foreground text-background hover:opacity-90 hover:shadow-lg hover:shadow-foreground/10";
 
-                const secondary =
-                  "glass hover:opacity-90";
+                const secondary = "glass hover:opacity-90";
 
                 return (
                   <a
@@ -59,9 +66,7 @@ export default function Contact() {
               })}
             </div>
 
-            <p className="mt-6 text-xs text-muted-foreground">
-              Typically replying within 24–48 hours.
-            </p>
+            <p className="mt-6 text-xs text-muted-foreground">{t.contact.reply}</p>
           </motion.div>
         </div>
       </div>

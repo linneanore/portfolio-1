@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/language-context";
 
 const projects = [
   {
@@ -28,22 +29,24 @@ const projects = [
 ];
 
 export default function Projects() {
+  const { t } = useLanguage();
+
   return (
     <section id="work" className="relative overflow-hidden">
       <div className="container-custom py-24 md:py-32 relative z-10">
         {/* Section header */}
         <div className="max-w-3xl mb-14 md:mb-16">
           <p className="text-xs font-medium tracking-widest text-muted-foreground mb-4">
-            SELECTED WORK
+            {t.work.label}
           </p>
 
           <h2 className="text-3xl md:text-5xl font-display font-bold leading-tight">
-            Projects that I’ve built<span className="text-primary">.</span>
+            {t.work.title}
+            <span className="text-primary">{t.work.dot}</span>
           </h2>
 
           <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-            A few highlights that show how I think, build, and ship modern frontend
-            experiences.
+            {t.work.intro}
           </p>
         </div>
 
@@ -86,14 +89,14 @@ export default function Projects() {
                   href={project.live}
                   className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium bg-foreground text-background hover:opacity-90 transition"
                 >
-                  Live
+                  {t.work.buttons.live}
                 </a>
 
                 <a
                   href={project.code}
                   className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium glass hover:opacity-90 transition"
                 >
-                  Code
+                  {t.work.buttons.code}
                 </a>
               </div>
             </motion.article>

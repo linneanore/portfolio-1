@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { useLanguage } from "@/context/language-context";
 
 const items = [
   {
@@ -48,21 +49,24 @@ const items = [
 ];
 
 export default function TechStack() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative overflow-hidden">
       <div className="container-custom py-24 md:py-32 relative z-10">
         {/* Header */}
         <div className="max-w-3xl mb-14 md:mb-16">
           <p className="text-xs font-medium tracking-widest text-muted-foreground mb-4">
-            WHAT I WORK WITH
+            {t.tech.label}
           </p>
 
           <h2 className="text-3xl md:text-5xl font-display font-bold leading-tight">
-            Tech stack & strengths<span className="text-primary">.</span>
+            {t.tech.title}
+            <span className="text-primary">{t.tech.dot}</span>
           </h2>
 
           <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-            The tools I use most often — and the areas I focus on when building products.
+            {t.tech.intro}
           </p>
         </div>
 
