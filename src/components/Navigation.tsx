@@ -38,7 +38,7 @@ export default function Navigation() {
       transition={{ duration: 0.8, ease: "easeOut", delay: show ? 0.2 : 0 }}
       className="fixed top-4 md:top-6 left-0 right-0 z-50 px-4 md:px-6"
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-[1400px] mx-auto">
         <div className="glass-strong rounded-full px-4 md:px-8 py-3 md:py-4 flex items-center justify-between">
           <motion.a
             href="#home"
