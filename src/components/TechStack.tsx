@@ -1,101 +1,111 @@
 import { motion } from "framer-motion";
 import {
-  Braces,
-  Database,
-  Layout,
+  LayoutPanelLeft,
   Server,
+  Database,
+  Braces,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
 
-type StackItem = {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-};
-
-const stack: StackItem[] = [
+const items = [
   {
+    icon: LayoutPanelLeft,
     title: "Frontend",
-    description: "React, TypeScript, Tailwind, component systems",
-    icon: <Layout className="h-5 w-5" />,
+    text: "React, TypeScript, Tailwind, component systems",
+    tags: ["React", "TypeScript", "Tailwind"],
   },
   {
+    icon: Server,
     title: "Backend",
-    description: "Node.js, REST APIs, Express",
-    icon: <Server className="h-5 w-5" />,
+    text: "Node.js, REST APIs, Express",
+    tags: ["Node", "Express", "REST"],
   },
   {
+    icon: Database,
     title: "Databases",
-    description: "SQL basics, Supabase, MongoDB",
-    icon: <Database className="h-5 w-5" />,
+    text: "SQL basics, Supabase, MongoDB",
+    tags: ["Supabase", "MongoDB", "SQL"],
   },
   {
+    icon: Braces,
     title: "Clean code",
-    description: "Readable structure, reusable components, scalability",
-    icon: <Braces className="h-5 w-5" />,
+    text: "Readable structure, reusable components, scalability",
+    tags: ["Components", "Architecture", "Refactor"],
   },
   {
+    icon: ShieldCheck,
     title: "Accessibility",
-    description: "WCAG mindset, semantic HTML, UX clarity",
-    icon: <ShieldCheck className="h-5 w-5" />,
+    text: "WCAG mindset, semantic HTML, UX clarity",
+    tags: ["WCAG", "A11y", "Semantics"],
   },
   {
+    icon: Sparkles,
     title: "UX polish",
-    description: "Micro-interactions, motion, attention to detail",
-    icon: <Sparkles className="h-5 w-5" />,
+    text: "Micro-interactions, motion, attention to detail",
+    tags: ["Motion", "UI", "Details"],
   },
 ];
 
 export default function TechStack() {
   return (
-    <section className="section-padding">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <p className="text-sm text-muted-foreground">What I work with</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
-            Tech stack & strengths
-          </h2>
-          <p className="mt-4 max-w-2xl text-muted-foreground">
-            The tools I use most often — and the areas I focus on when building
-            products.
+    <section className="relative overflow-hidden">
+      <div className="container-custom py-24 md:py-32 relative z-10">
+        {/* Header */}
+        <div className="max-w-3xl mb-14 md:mb-16">
+          <p className="text-xs font-medium tracking-widest text-muted-foreground mb-4">
+            WHAT I WORK WITH
           </p>
-        </motion.div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {stack.map((item, idx) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: idx * 0.04 }}
-              className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/30 p-7 glass"
-            >
-              <div className="pointer-events-none absolute inset-0 bg-grid opacity-15" />
-              <div className="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-accent/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80" />
+          <h2 className="text-3xl md:text-5xl font-display font-bold leading-tight">
+            Tech stack & strengths<span className="text-primary">.</span>
+          </h2>
 
-              <div className="relative">
+          <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+            The tools I use most often — and the areas I focus on when building products.
+          </p>
+        </div>
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {items.map((it, i) => {
+            const Icon = it.icon;
+            return (
+              <motion.article
+                key={it.title}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: i * 0.06 }}
+                className="glass-strong rounded-3xl p-6 md:p-7 flex flex-col gap-5"
+              >
                 <div className="flex items-center gap-3">
-                  <div className="grid h-10 w-10 place-items-center rounded-xl border border-border/60 bg-secondary/40 text-foreground">
-                    {item.icon}
+                  <div className="w-11 h-11 rounded-2xl bg-secondary flex items-center justify-center">
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-lg font-semibold tracking-tight">
-                    {item.title}
+
+                  <h3 className="font-display font-bold text-lg md:text-xl">
+                    {it.title}
                   </h3>
                 </div>
 
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  {item.description}
+                <p className="text-sm md:text-[15px] text-muted-foreground leading-relaxed">
+                  {it.text}
                 </p>
-              </div>
-            </motion.div>
-          ))}
+
+                <div className="flex flex-wrap gap-2">
+                  {it.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </section>
