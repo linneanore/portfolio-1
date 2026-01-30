@@ -1,60 +1,69 @@
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Mail } from "lucide-react";
+
+const links = [
+  { label: "Email me", href: "mailto:nore.linnea@hotmail.com", icon: Mail, primary: true },
+  { label: "GitHub", href: "https://github.com/linneanore", icon: Github },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/linneanore/", icon: Linkedin },
+];
 
 export default function Contact() {
   return (
-    <section id="contact" className="section-padding">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mx-auto max-w-3xl text-center"
-        >
-          <p className="text-sm text-muted-foreground">Get in touch</p>
-
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
-            Let’s build something together
-          </h2>
-
-          <p className="mt-4 text-muted-foreground">
-            I’m open to junior roles, and collaborations.  
-            Feel free to reach out if you’d like to talk tech, projects, or ideas.
+    <section id="contact" className="relative overflow-hidden">
+      <div className="container-custom py-24 md:py-32 relative z-10">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-xs font-medium tracking-widest text-muted-foreground mb-4">
+            GET IN TOUCH
           </p>
 
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Button variant="glow" size="lg" asChild>
-              <a href="mailto:nore.linnea@hotmail.com">
-                <Mail className="h-4 w-4" />
-                Email me
-              </a>
-            </Button>
+          <h2 className="text-4xl md:text-6xl font-display font-bold leading-tight">
+            Let’s build something together<span className="text-primary">.</span>
+          </h2>
 
-            <Button variant="ghost" size="lg" asChild>
-              <a
-                href="https://github.com/linneanore"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Github className="h-4 w-4" />
-                GitHub
-              </a>
-            </Button>
+          <p className="mt-5 text-muted-foreground text-base md:text-lg leading-relaxed">
+            I’m open to junior roles, internships, and collaborations. Feel free to reach
+            out if you’d like to talk tech, projects, or ideas.
+          </p>
 
-            <Button variant="ghost" size="lg" asChild>
-              <a
-                href="https://www.linkedin.com/in/linneanore/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Linkedin className="h-4 w-4" />
-                LinkedIn
-              </a>
-            </Button>
-          </div>
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-10 glass-strong rounded-3xl p-6 md:p-8"
+          >
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 md:gap-4">
+              {links.map((l) => {
+                const Icon = l.icon;
+                const base =
+                  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition";
+
+                const primary =
+                  "bg-foreground text-background hover:opacity-90 hover:shadow-lg hover:shadow-foreground/10";
+
+                const secondary =
+                  "glass hover:opacity-90";
+
+                return (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    target={l.href.startsWith("http") ? "_blank" : undefined}
+                    rel={l.href.startsWith("http") ? "noreferrer" : undefined}
+                    className={`${base} ${l.primary ? primary : secondary}`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {l.label}
+                  </a>
+                );
+              })}
+            </div>
+
+            <p className="mt-6 text-xs text-muted-foreground">
+              Typically replying within 24–48 hours.
+            </p>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
