@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Hero() {
   return (
-    <section id="top" className="section-padding">
+    <section id="home" className="section-padding">
       <div className="container-custom">
         <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-card/30 p-10 md:p-14 glass">
           {/* Background effects */}
