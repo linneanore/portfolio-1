@@ -12,7 +12,7 @@ export default function Index() {
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
 
-      <main>
+      <main className="pt-24 md:pt-28">
         <Hero />
         <About />
         <Projects />

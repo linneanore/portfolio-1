@@ -37,7 +37,7 @@ const projects: Project[] = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="section-padding">
+    <section id="work" className="section-padding">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
