@@ -1,128 +1,100 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, Github } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
-type Project = {
-  title: string;
-  description: string;
-  tags: string[];
-  liveUrl?: string;
-  repoUrl?: string;
-};
-
-const projects: Project[] = [
+const projects = [
   {
     title: "Cinema Booking",
     description:
-      "Seat selection, booking flow and responsive UI. Built with TypeScript and React with a focus on UX and accessibility.",
-    tags: ["React", "TypeScript", "Tailwind"],
-    liveUrl: "#",
-    repoUrl: "#",
+      "Seat selection, real-time booking flow and a clean kiosk-like UX for a cinema website.",
+    tags: ["React", "TypeScript", "Node", "Supabase"],
+    live: "#",
+    code: "#",
   },
   {
-    title: "Accessibility Audit",
+    title: "WCAG Accessibility Audit",
     description:
-      "WCAG 2.1 AA evaluation using Lighthouse and Axe. Clear reporting and actionable improvements.",
-    tags: ["WCAG", "Lighthouse", "Axe"],
-    liveUrl: "#",
+      "Accessibility evaluation of Swedish e-commerce sites using Lighthouse & Axe (WCAG 2.1 AA).",
+    tags: ["WCAG", "Lighthouse", "Axe", "Research"],
+    live: "#",
+    code: "#",
   },
   {
-    title: "Portfolio (This site)",
+    title: "Portfolio",
     description:
-      "A modern animated developer portfolio with a clean design system and reusable components.",
-    tags: ["Vite", "Framer Motion", "UI System"],
-    repoUrl: "#",
+      "My personal portfolio rebuilt with a modern design system, theme toggle and smooth interactions.",
+    tags: ["React", "TypeScript", "Tailwind", "Framer Motion"],
+    live: "#",
+    code: "#",
   },
 ];
 
 export default function Projects() {
   return (
-    <section id="work" className="section-padding">
-      <div className="container-custom">
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <p className="text-sm text-muted-foreground">Selected work</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
-            Projects
-          </h2>
-          <p className="mt-4 max-w-2xl text-muted-foreground">
-            A few things I’ve built recently — focused on clean UI, performance,
-            and thoughtful UX.
+    <section id="work" className="relative overflow-hidden">
+      <div className="container-custom py-24 md:py-32 relative z-10">
+        {/* Section header */}
+        <div className="max-w-3xl mb-14 md:mb-16">
+          <p className="text-xs font-medium tracking-widest text-muted-foreground mb-4">
+            SELECTED WORK
           </p>
-        </motion.div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {projects.map((p, idx) => (
+          <h2 className="text-3xl md:text-5xl font-display font-bold leading-tight">
+            Projects that I’ve built<span className="text-primary">.</span>
+          </h2>
+
+          <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
+            A few highlights that show how I think, build, and ship modern frontend
+            experiences.
+          </p>
+        </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {projects.map((project, i) => (
             <motion.article
-              key={p.title}
-              initial={{ opacity: 0, y: 18 }}
+              key={project.title}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: idx * 0.06 }}
-              className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/30 p-7 glass"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="glass-strong rounded-3xl p-6 md:p-8 flex flex-col gap-6 transition-transform duration-300 hover:-translate-y-1"
             >
-              <div className="pointer-events-none absolute inset-0 bg-grid opacity-20" />
-              <div className="pointer-events-none absolute -top-20 -right-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80" />
+              <div className="flex flex-col gap-3">
+                <h3 className="text-xl md:text-2xl font-display font-bold">
+                  {project.title}
+                </h3>
 
-              <div className="relative">
-                <div className="flex items-start justify-between gap-4">
-                  <h3 className="text-xl font-semibold tracking-tight">
-                    {p.title}
-                  </h3>
-
-                  <div className="flex items-center gap-2">
-                    {p.repoUrl && (
-                      <Button variant="ghost" size="icon" asChild>
-                        <a
-                          href={p.repoUrl}
-                          aria-label={`${p.title} repository`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <Github className="h-4 w-4" />
-                        </a>
-                      </Button>
-                    )}
-                    {p.liveUrl && (
-                      <Button variant="ghost" size="icon" asChild>
-                        <a
-                          href={p.liveUrl}
-                          aria-label={`${p.title} live demo`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <ArrowUpRight className="h-4 w-4" />
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </div>
-
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  {p.description}
+                <p className="text-muted-foreground leading-relaxed">
+                  {project.description}
                 </p>
+              </div>
 
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {p.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full border border-border/60 bg-secondary/40 px-3 py-1 text-xs text-muted-foreground"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-6 inline-flex items-center gap-2 text-sm text-foreground/80 transition group-hover:text-foreground">
-                  <span>View details</span>
-                  <span className="transition-transform duration-300 group-hover:translate-x-1">
-                    →
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground"
+                  >
+                    {tag}
                   </span>
-                </div>
+                ))}
+              </div>
+
+              {/* Buttons */}
+              <div className="mt-auto flex items-center gap-3">
+                <a
+                  href={project.live}
+                  className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium bg-foreground text-background hover:opacity-90 transition"
+                >
+                  Live
+                </a>
+
+                <a
+                  href={project.code}
+                  className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium glass hover:opacity-90 transition"
+                >
+                  Code
+                </a>
               </div>
             </motion.article>
           ))}
