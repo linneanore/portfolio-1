@@ -1,4 +1,10 @@
-import { motion, useMotionValue, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLanguage } from "@/context/language-context";
 
@@ -53,12 +59,9 @@ const projects: Project[] = [
 function wrapX(value: number, halfWidth: number) {
   if (halfWidth <= 0) return value;
 
-
   let x = value;
-
   while (x <= -halfWidth) x += halfWidth;
   while (x > 0) x -= halfWidth;
-
   return x;
 }
 
@@ -97,13 +100,14 @@ export default function Projects() {
     return () => window.removeEventListener("resize", measure);
   }, []);
 
+  
   useEffect(() => {
     if (reduceMotion) return;
     if (halfWidth <= 0) return;
 
     let raf = 0;
     let last = performance.now();
-    const speedPxPerSec = 18; 
+    const speedPxPerSec = 26;
 
     const tick = (now: number) => {
       const dt = (now - last) / 1000;
@@ -125,7 +129,6 @@ export default function Projects() {
     if (halfWidth <= 0) return;
 
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-
     e.preventDefault();
 
     const next = wrapX(x.get() - delta, halfWidth);
@@ -138,7 +141,6 @@ export default function Projects() {
     pausedRef.current = true;
   };
   const onMouseLeave = () => {
-    
     pauseFor(600);
   };
 
@@ -175,7 +177,7 @@ export default function Projects() {
 
           <motion.div
             ref={trackRef}
-            className="flex gap-4 md:gap-6 will-change-transform cursor-grab active:cursor-grabbing select-none"
+            className="flex gap-4 md:gap-6 will-change-transform cursor-grab active:cursor-grabbing select-none py-2"
             style={{ x }}
             drag={reduceMotion ? false : "x"}
             dragElastic={0.08}
@@ -188,7 +190,12 @@ export default function Projects() {
             onDragEnd={() => pauseFor(900)}
           >
             {items.map((project, i) => (
-              <ProjectCard key={`${project.title}-${i}`} project={project} t={t} />
+              <ProjectCard
+                key={`${project.title}-${i}`}
+                project={project}
+                t={t}
+                reduceMotion={!!reduceMotion}
+              />
             ))}
           </motion.div>
         </div>
@@ -201,52 +208,152 @@ export default function Projects() {
   );
 }
 
-function ProjectCard({ project, t }: { project: Project; t: Translation }) {
+function ProjectCard({
+  project,
+  t,
+  reduceMotion,
+}: {
+  project: Project;
+  t: Translation;
+  reduceMotion: boolean;
+}) {
+  const cardRef = useRef<HTMLDivElement | null>(null);
+
+
+  const mx = useMotionValue(50);
+  const my = useMotionValue(50);
+
+ 
+  const tiltX = useSpring(useMotionValue(0), { stiffness: 180, damping: 18 });
+  const tiltY = useSpring(useMotionValue(0), { stiffness: 180, damping: 18 });
+
+  
+  const glow = useTransform(
+    [mx, my],
+    ([x, y]) =>
+      `radial-gradient(600px circle at ${x}% ${y}%, hsl(var(--primary) / 0.16), transparent 55%)`
+  );
+
+  const shine = useTransform(
+    [mx, my],
+    ([x, y]) =>
+      `radial-gradient(320px circle at ${x}% ${y}%, hsl(var(--foreground) / 0.10), transparent 55%)`
+  );
+
+  const handleMove: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    if (reduceMotion) return;
+    const el = cardRef.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const px = ((e.clientX - rect.left) / rect.width) * 100;
+    const py = ((e.clientY - rect.top) / rect.height) * 100;
+
+    mx.set(px);
+    my.set(py);
+
+    const dx = px - 50;
+    const dy = py - 50;
+
+    tiltX.set((-dy / 50) * 4);
+    tiltY.set((dx / 50) * 6);
+  };
+
+  const handleLeave = () => {
+    if (reduceMotion) return;
+    tiltX.set(0);
+    tiltY.set(0);
+    mx.set(50);
+    my.set(50);
+  };
+
   return (
-    <article
+    <motion.article
+      ref={cardRef}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      whileHover={reduceMotion ? undefined : { y: -6 }}
+      transition={{ type: "spring", stiffness: 220, damping: 18 }}
       className={[
+        "relative",
         "glass-strong rounded-3xl p-6 md:p-8",
         "min-w-[280px] sm:min-w-[340px] md:min-w-[420px]",
         "max-w-[520px]",
         "flex flex-col gap-6",
-        "transition-transform duration-300 hover:-translate-y-1",
+        "border border-border/60",
+        "overflow-hidden",
       ].join(" ")}
+      style={
+        reduceMotion
+          ? undefined
+          : {
+              transformStyle: "preserve-3d",
+              rotateX: tiltX,
+              rotateY: tiltY,
+            }
+      }
     >
-      <div className="flex flex-col gap-3">
-        <h3 className="text-xl md:text-2xl font-display font-bold">
-          {project.title}
-        </h3>
-        <p className="text-muted-foreground leading-relaxed">
-          {project.description}
-        </p>
-      </div>
+      {/* Glow-follow layer */}
+      {!reduceMotion && (
+        <>
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{ background: glow }}
+          />
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-60"
+            style={{ background: shine }}
+          />
+        </>
+      )}
 
-      <div className="flex flex-wrap gap-2">
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground"
+      {/* Subtle hover border highlight */}
+      <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-transparent hover:ring-primary/20 transition" />
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col gap-6 h-full">
+        <div className="flex flex-col gap-3">
+          <h3 className="text-xl md:text-2xl font-display font-bold">
+            {project.title}
+          </h3>
+          <p className="text-muted-foreground leading-relaxed">
+            {project.description}
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground transition-transform duration-300 hover:scale-[1.03]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-auto flex items-center gap-3">
+          <motion.a
+            href={project.live}
+            whileHover={reduceMotion ? undefined : { scale: 1.03 }}
+            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+            className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium bg-foreground text-background hover:opacity-90 transition"
           >
-            {tag}
-          </span>
-        ))}
-      </div>
+            {t.work.buttons.live}
+          </motion.a>
 
-      <div className="mt-auto flex items-center gap-3">
-        <a
-          href={project.live}
-          className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium bg-foreground text-background hover:opacity-90 transition"
-        >
-          {t.work.buttons.live}
-        </a>
-
-        <a
-          href={project.code}
-          className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium glass hover:opacity-90 transition"
-        >
-          {t.work.buttons.code}
-        </a>
+          <motion.a
+            href={project.code}
+            whileHover={reduceMotion ? undefined : { scale: 1.03 }}
+            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+            className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium glass hover:opacity-90 transition"
+          >
+            {t.work.buttons.code}
+          </motion.a>
+        </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
