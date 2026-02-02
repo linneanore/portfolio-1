@@ -3,11 +3,15 @@ import Index from "./pages/Index";
 import IntroLoader from "@/components/IntroLoader";
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  const [showIntro, setShowIntro] = useState(true);
 
-  if (loading) {
-    return <IntroLoader onComplete={() => setLoading(false)} />;
-  }
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Render the whole site immediately (behind the intro) */}
+      <Index />
 
-  return <Index />;
+      {/* Intro overlay on top */}
+      {showIntro && <IntroLoader onComplete={() => setShowIntro(false)} />}
+    </div>
+  );
 }
