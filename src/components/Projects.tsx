@@ -355,7 +355,7 @@ function ProjectCard({
     rel="noreferrer"
     whileHover={reduceMotion ? undefined : { scale: 1.03 }}
     whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-    className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium glass hover:opacity-90 transition"
+    className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium bg-foreground text-background hover:opacity-90 transition"
   >
     {t.work.buttons.code}
   </motion.a>
