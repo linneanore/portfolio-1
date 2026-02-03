@@ -36,7 +36,7 @@ const projects: Project[] = [
       "Seat selection, real-time booking flow and a clean kiosk-like UX for a cinema website.",
     tags: ["React", "TypeScript", "Node", "Supabase"],
     live: "#",
-    code: "#",
+    code: "https://github.com/Nemkunde/cinecom",
   },
   {
     title: "WCAG Accessibility Audit",
@@ -52,7 +52,7 @@ const projects: Project[] = [
       "My personal portfolio rebuilt with a modern design system, theme toggle and smooth interactions.",
     tags: ["React", "TypeScript", "Tailwind", "Framer Motion"],
     live: "#",
-    code: "#",
+    code: "https://github.com/linneanore/portfolio-1",
   },
 ];
 
@@ -335,23 +335,31 @@ function ProjectCard({
         </div>
 
         <div className="mt-auto flex items-center gap-3">
-          <motion.a
-            href={project.live}
-            whileHover={reduceMotion ? undefined : { scale: 1.03 }}
-            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-            className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium bg-foreground text-background hover:opacity-90 transition"
-          >
-            {t.work.buttons.live}
-          </motion.a>
+{project.live !== "#" && (
+  <motion.a
+    href={project.live}
+    target="_blank"
+    rel="noreferrer"
+    whileHover={reduceMotion ? undefined : { scale: 1.03 }}
+    whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+    className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium bg-foreground text-background hover:opacity-90 transition"
+  >
+    {t.work.buttons.live}
+  </motion.a>
+)}
 
-          <motion.a
-            href={project.code}
-            whileHover={reduceMotion ? undefined : { scale: 1.03 }}
-            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-            className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium glass hover:opacity-90 transition"
-          >
-            {t.work.buttons.code}
-          </motion.a>
+          {project.code !== "#" && (
+  <motion.a
+    href={project.code}
+    target="_blank"
+    rel="noreferrer"
+    whileHover={reduceMotion ? undefined : { scale: 1.03 }}
+    whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+    className="inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-medium glass hover:opacity-90 transition"
+  >
+    {t.work.buttons.code}
+  </motion.a>
+)}
         </div>
       </div>
     </motion.article>
