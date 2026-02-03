@@ -16,6 +16,31 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/context/language-context";
 
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.08,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.45,
+      ease: EASE_OUT,
+    },
+  },
+};
+
 type Translation = {
   tech: {
     label: string;
@@ -29,10 +54,10 @@ type TechItem = {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
   text: string;
-  tags: string[];
+  tags: ReadonlyArray<string>;
 };
 
-const items: TechItem[] = [
+const items: ReadonlyArray<TechItem> = [
   {
     icon: LayoutPanelLeft,
     title: "Frontend",
@@ -72,7 +97,9 @@ const items: TechItem[] = [
 ];
 
 export default function TechStack() {
-  const { t } = useLanguage() as { t: Translation };
+  const { t } = useLanguage();
+  const tt = t as unknown as Translation;
+
   const reduceMotion = useReducedMotion();
 
   return (
@@ -81,31 +108,50 @@ export default function TechStack() {
         {/* Header */}
         <div className="max-w-3xl mb-14 md:mb-16">
           <p className="text-xs font-medium tracking-widest text-muted-foreground mb-4">
-            {t.tech.label}
+            {tt.tech.label}
           </p>
 
           <h2 className="text-3xl md:text-5xl font-display font-bold leading-tight">
-            {t.tech.title}
-            <span className="text-primary">{t.tech.dot}</span>
+            {tt.tech.title}
+            <span className="text-primary">{tt.tech.dot}</span>
           </h2>
 
           <p className="mt-4 text-muted-foreground text-base md:text-lg leading-relaxed">
-            {t.tech.intro}
+            {tt.tech.intro}
           </p>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+          variants={containerVariants}
+          initial={reduceMotion ? false : "hidden"}
+          whileInView={reduceMotion ? undefined : "show"}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {items.map((it) => (
-            <TechCard key={it.title} item={it} reduceMotion={!!reduceMotion} />
+            <motion.div
+              key={it.title}
+              variants={itemVariants}
+              initial={reduceMotion ? false : undefined}
+              animate={reduceMotion ? undefined : undefined}
+            >
+              <TechCard item={it} reduceMotion={!!reduceMotion} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-function TechCard({ item, reduceMotion }: { item: TechItem; reduceMotion: boolean }) {
+function TechCard({
+  item,
+  reduceMotion,
+}: {
+  item: TechItem;
+  reduceMotion: boolean;
+}) {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const mx = useMotionValue(50);
@@ -138,7 +184,6 @@ function TechCard({ item, reduceMotion }: { item: TechItem; reduceMotion: boolea
     mx.set(px);
     my.set(py);
 
- 
     const dx = px - 50;
     const dy = py - 50;
 
