@@ -123,7 +123,7 @@ export default function TechStack() {
 
         {/* Cards */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 items-stretch"
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}
           whileInView={reduceMotion ? undefined : "show"}
@@ -214,6 +214,8 @@ function TechCard({
         "border border-border/60",
         "overflow-hidden",
         "flex flex-col gap-5",
+        "h-full",
+        "min-h-[220px] md:min-h-[240px]"
       ].join(" ")}
       style={
         reduceMotion
@@ -244,7 +246,7 @@ function TechCard({
       {/* Border highlight */}
       <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-transparent hover:ring-primary/18 transition" />
 
-      <div className="relative z-10 flex flex-col gap-5">
+      <div className="relative z-10 flex flex-col gap-5 h-full">
         <div className="flex items-center gap-3">
           <div className="w-11 h-11 rounded-2xl bg-secondary flex items-center justify-center">
             <Icon className="w-5 h-5" />
@@ -259,7 +261,7 @@ function TechCard({
           {item.text}
         </p>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mt-auto">
           {item.tags.map((tag) => (
             <span
               key={tag}
