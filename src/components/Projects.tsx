@@ -43,7 +43,7 @@ const projects: Project[] = [
     description:
       "Accessibility evaluation of Swedish e-commerce sites using Lighthouse & Axe (WCAG 2.1 AA).",
     tags: ["WCAG", "Lighthouse", "Axe", "Research"],
-    live: "#",
+    live: "https://github.com/linneanore/wcag-accessibility-audit",
     code: "#",
   },
   {
