@@ -125,10 +125,14 @@ export default function Projects() {
     return () => cancelAnimationFrame(raf);
   }, [reduceMotion, halfWidth, x]);
 
-  const onWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
-    if (halfWidth <= 0) return;
+  useEffect(() => {
+  const el = viewportRef.current;
+  if (!el) return;
+  if (halfWidth <= 0) return;
 
+  const handleWheel = (e: WheelEvent) => {
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+
     e.preventDefault();
 
     const next = wrapX(x.get() - delta, halfWidth);
@@ -136,6 +140,13 @@ export default function Projects() {
 
     pauseFor(1100);
   };
+
+  el.addEventListener("wheel", handleWheel, { passive: false });
+
+  return () => {
+    el.removeEventListener("wheel", handleWheel);
+  };
+}, [halfWidth, x]);
 
   const onMouseEnter = () => {
     pausedRef.current = true;
@@ -166,8 +177,7 @@ export default function Projects() {
         {/* Marquee viewport */}
         <div
           ref={viewportRef}
-          className="relative overflow-hidden"
-          onWheel={onWheel}
+          className="relative overflow-hidden overscroll-contain"
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
