@@ -30,7 +30,16 @@ type Translation = {
 };
 
 const projects: Project[] = [
-  {
+    {
+    title: "Psicólogo General Sanitario — aaapsicologia.com",
+    description:
+      "Full client website built from scratch for a licensed clinical psychologist in Madrid. Bilingual (ES/EN), GDPR compliant, Cal.com booking, Formspree contact form, custom domain and SEO setup.",
+    tags: ["HTML", "CSS", "JavaScript", "Vercel", "SEO"],
+    live: "https://aaapsicologia.com",
+    code: "https://github.com/linneanore/alejandro-achi-psicologo",
+  },
+
+  {    
     title: "Cinema Booking",
     description:
       "Seat selection, real-time booking flow and a clean kiosk-like UX for a cinema website.",
