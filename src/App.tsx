@@ -40,13 +40,6 @@ const projects = [
   },
 ];
 
-const stats = [
-  ["7+", "År i tech"],
-  ["4", "Projekt i portfolion"],
-  ["2", "Utbildningar"],
-  ["2", "Språk"],
-];
-
 export default function App() {
   return (
     <main className="overflow-hidden" style={{ background: "var(--background)", color: "var(--foreground)" }}>
@@ -161,16 +154,6 @@ export default function App() {
             </p>
           </article>
         </div>
-      </section>
-
-      {/* STATS */}
-      <section className="grid grid-cols-2 md:grid-cols-4" style={{ background: "var(--blue)", color: "var(--blue-foreground)" }}>
-        {stats.map(([value, label]) => (
-          <div key={label} className="px-5 py-12 md:px-8 md:py-16" style={{ borderRight: "1px solid oklch(0.98 0.01 85 / 20%)", borderBottom: "1px solid oklch(0.98 0.01 85 / 20%)" }}>
-            <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{value}</p>
-            <p className="mt-3 text-xs font-bold uppercase">{label}</p>
-          </div>
-        ))}
       </section>
 
       {/* WORK */}
