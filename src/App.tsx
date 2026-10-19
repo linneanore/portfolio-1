@@ -17,7 +17,7 @@ const projects = [
     type: "Fullstack",
     result: "Realtidsbokning utan reload",
     codeUrl: "https://github.com/Nemkunde/cinecom",
-    imgSrc: "https://images.unsplash.com/photo-1616469829935-c2d7ccf6b054?w=1408&auto=format&fit=crop&q=80",
+    imgSrc: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1408&auto=format&fit=crop&q=80",
     imgAlt: "Cinema Booking system",
   },
   {
