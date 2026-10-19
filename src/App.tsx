@@ -22,7 +22,7 @@ const projects = [
   },
   {
     number: "03",
-    title: "WCAG Tillgänglighetsaudit",
+    title: "Tillgänglighetsaudit",
     type: "Tillgänglighet + Analys",
     result: "WCAG 2.1 AA standard",
     codeUrl: "https://github.com/linneanore",
@@ -47,7 +47,7 @@ export default function App() {
       {/* NAV */}
       <header style={{ borderBottom: "1px solid var(--border)" }} className="flex h-20 items-center justify-between px-5 md:px-10">
         <a href="#top" className="font-display text-2xl" style={{ fontFamily: "'DM Serif Display', serif" }}>
-          Studio / 01
+          Linnea Nore
         </a>
         <nav className="flex items-center gap-5 text-xs font-semibold uppercase md:gap-9">
           <a className="hidden transition-opacity hover:opacity-50 sm:block" href="#work">Projekt</a>
