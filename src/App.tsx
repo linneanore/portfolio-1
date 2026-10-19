@@ -22,7 +22,7 @@ const projects = [
   },
   {
     number: "03",
-    title: "Tillgänglighetsaudit",
+    title: "WCAG Audit",
     type: "Tillgänglighet + Analys",
     result: "WCAG 2.1 AA standard",
     codeUrl: "https://github.com/linneanore",
