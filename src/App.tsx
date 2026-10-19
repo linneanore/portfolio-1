@@ -1,4 +1,6 @@
 import { ArrowDownRight, ArrowUpRight, Code2, Megaphone, BarChart2 } from "lucide-react";
+import psicologia from "./assets/psicologia.png";
+import salong from "./assets/salong.png";
 
 const projects = [
   {
@@ -8,7 +10,7 @@ const projects = [
     result: "Organisk synlighet från noll",
     liveUrl: "https://aaapsicologia.com",
     codeUrl: "https://github.com/linneanore",
-    imgSrc: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1408&auto=format&fit=crop&q=80",
+    imgSrc: psicologia,
     imgAlt: "Psicólogo General Sanitario webbplats",
   },
   {
@@ -35,8 +37,9 @@ const projects = [
     type: "Fullstack App",
     result: "Komplett bokningsflöde",
     codeUrl: "https://github.com/linneanore/salon-booking-admin",
-    imgSrc: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1408&auto=format&fit=crop&q=80",
+    imgSrc: salong,
     imgAlt: "Salon Booking Admin",
+    imgPosition: "object-left-top",
   },
 ];
 
@@ -177,7 +180,7 @@ export default function App() {
                   width={1408}
                   height={960}
                   alt={project.imgAlt}
-                  className="aspect-[1.47] w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+                  className={`aspect-[1.47] w-full object-cover ${project.imgPosition || ''} transition-transform duration-700 group-hover:scale-[1.025]`}
                 />
               </div>
               <div className="lg:col-span-4 lg:p-5">
