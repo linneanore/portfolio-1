@@ -20,7 +20,7 @@ const projects = [
     type: "Tillgänglighet + Analys",
     result: "Analys och utvärdering av webbplatser mot WCAG 2.1 AA med verktyg som Lighthouse och Axe. Dokumenterade brister med konkreta åtgärdsförslag.",
     codeUrl: "https://github.com/linneanore",
-    imgSrc: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1408&auto=format&fit=crop&q=80",
+    imgSrc: "https://images.unsplash.com/photo-1498049860654-af1a5c566876?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
     imgAlt: "WCAG Accessibility Audit",
   },
   {
