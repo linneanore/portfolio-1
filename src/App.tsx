@@ -154,6 +154,25 @@ export default function App() {
         </div>
       </section>
 
+{/* TECH STACK */}
+<section className="grid grid-cols-2 md:grid-cols-4" style={{ background: "var(--lilac)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+  {[
+    { title: "Frontend", items: ["React", "TypeScript", "Tailwind", "HTML & CSS"] },
+    { title: "Marketing", items: ["SEO", "Google Analytics", "Meta Ads", "WordPress"] },
+    { title: "Verktyg", items: ["Figma", "Photoshop", "Canva", "Lighthouse"] },
+    { title: "Backend", items: ["Supabase", "Node.js", "API-integrationer", "Git"] },
+  ].map((col) => (
+    <div key={col.title} className="px-8 py-14" style={{ borderRight: "1px solid var(--border)" }}>
+      <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "2rem", marginBottom: "1.5rem" }}>{col.title}</h3>
+      <ul className="space-y-3">
+        {col.items.map((item) => (
+          <li key={item} style={{ fontSize: "0.85rem", fontWeight: 400, color: "var(--muted-foreground)", letterSpacing: "0.02em" }}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</section>
+
       {/* WORK */}
       <section id="work" className="px-5 py-20 md:px-10 md:py-28" style={{ background: "var(--background)" }}>
         <div className="mb-14 flex items-end justify-between pb-6" style={{ borderBottom: "1px solid var(--border)" }}>
