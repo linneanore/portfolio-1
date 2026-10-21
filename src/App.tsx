@@ -7,26 +7,18 @@ const projects = [
     number: "01",
     title: "Psicólogo General Sanitario",
     type: "Webbutveckling + SEO",
-    result: "Organisk synlighet från noll",
+    result: "Komplett webbprojekt för en legitimerad klinisk psykolog i Madrid. Sökordsanalys, on-page och teknisk SEO för att bygga organisk synlighet från noll. Tvåspråkig, GDPR-anpassad och integrerad med Cal.com för bokning.",
     liveUrl: "https://aaapsicologia.com",
     codeUrl: "https://github.com/linneanore",
     imgSrc: psicologia,
     imgAlt: "Psicólogo General Sanitario webbplats",
   },
-  {
-    number: "02",
-    title: "Cinema Booking",
-    type: "Fullstack",
-    result: "Realtidsbokning utan reload",
-    codeUrl: "https://github.com/Nemkunde/cinecom",
-    imgSrc: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1408&auto=format&fit=crop&q=80",
-    imgAlt: "Cinema Booking system",
-  },
+
   {
     number: "03",
     title: "WCAG Audit",
     type: "Tillgänglighet + Analys",
-    result: "WCAG 2.1 AA standard",
+    result: "Analys och utvärdering av webbplatser mot WCAG 2.1 AA med verktyg som Lighthouse och Axe. Dokumenterade brister med konkreta åtgärdsförslag.",
     codeUrl: "https://github.com/linneanore",
     imgSrc: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1408&auto=format&fit=crop&q=80",
     imgAlt: "WCAG Accessibility Audit",
@@ -35,7 +27,7 @@ const projects = [
     number: "04",
     title: "Salon Booking Admin",
     type: "Fullstack App",
-    result: "Komplett bokningsflöde",
+    result: "Fullstack adminpanel för salonger med kalender, bokningshantering och kundregister. Byggd med React, TypeScript och Supabase för att visa ett komplett flöde från frontend till API.",
     codeUrl: "https://github.com/linneanore/salon-booking-admin",
     imgSrc: salong,
     imgAlt: "Salon Booking Admin",
@@ -84,7 +76,7 @@ export default function App() {
               Idéer som<br />klickar.
             </h1>
             <p className="mt-9 max-w-xl text-lg leading-relaxed md:text-2xl">
-              Jag omvandlar smart strategi till digitala upplevelser som ser bra ut, fungerar hårt och får varumärken att växa.
+              Strategi, kod och kreativitet i ett. Jag hjälper varumärken att synas, växa och göra intryck online.
             </p>
           </div>
           <a
@@ -135,25 +127,25 @@ export default function App() {
               Marknadsföring med mening
             </h3>
             <p className="mt-4 max-w-lg leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
-              Från positionering till betald sociala medier — varje kampanj börjar med en tydlig insikt och slutar med mätbar framgång.
+              Meta Ads, Google Ads och LinkedIn. Jag planerar och genomför kampanjer från strategi till resultat med fokus på konvertering och mätbar tillväxt.
             </p>
           </article>
           <article className="p-6 md:p-10">
             <Code2 strokeWidth={1.4} size={34} />
             <h3 className="mt-10" style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.875rem" }}>
-              Byggt för riktiga människor
+              SEO och webb som faktiskt syns
             </h3>
             <p className="mt-4 max-w-lg leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
-              Ren, tillgänglig frontend som får ditt varumärke att sticka ut på alla skärmar — utan att kompromissa med hastigheten.
+              Från sökordsanalys till teknisk SEO och WordPress. Jag bygger en digital närvaro som rankar, konverterar och håller över tid.
             </p>
           </article>
           <article className="p-6 md:p-10">
             <BarChart2 strokeWidth={1.4} size={34} />
             <h3 className="mt-10" style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1.875rem" }}>
-              Data som driver beslut
+              Beslut baserade på data
             </h3>
             <p className="mt-4 max-w-lg leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
-              Google Analytics, sökordsanalys och konverteringsoptimering — jag fattar beslut baserat på vad som faktiskt funkar.
+              Google Analytics, kampanjanalys och löpande optimering. Jag följer upp vad som funkar och justerar kontinuerligt för bättre resultat.
             </p>
           </article>
         </div>
