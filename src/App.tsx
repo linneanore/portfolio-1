@@ -119,6 +119,9 @@ export default function App() {
             Strategi först.<br />
             <span style={{ fontStyle: "italic" }}>Alltid mänsklig.</span>
           </h2>
+          <p className="mt-8 max-w-md leading-relaxed" style={{ color: "var(--muted-foreground)", fontSize: "1rem" }}>
+  Att kombinera kreativitet med strategi och faktiskt mäta om det funkar är det som driver mig. Jag rör mig naturligt mellan design, kod och marknadsföring och trivs som bäst när jag får jobba med hela kedjan.
+</p>
         </div>
         <div className="grid divide-y" style={{ borderColor: "var(--border)" }}>
           <article className="p-6 md:p-10">
