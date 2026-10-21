@@ -220,7 +220,7 @@ export default function App() {
       <footer className="px-5 py-16 md:px-10 md:py-24" style={{ background: "var(--foreground)", color: "var(--background)" }}>
         <div className="flex flex-col justify-between gap-16 md:flex-row md:items-end">
           <div>
-            <p className="section-label" style={{ color: "oklch(0.98 0.01 85 / 40%)" }}>Har du ett projekt i tankarna?</p>
+            <p className="section-label" style={{ color: "white" }}>Har du ett projekt i tankarna?</p>
             <h2
               className="mt-7 leading-[.85]"
               style={{ fontFamily: "'DM Serif Display', serif", fontSize: "clamp(3.5rem, 10vw, 9rem)" }}
@@ -239,7 +239,7 @@ export default function App() {
         </div>
         <div
           className="mt-24 flex flex-wrap justify-between gap-5 pt-5 text-xs uppercase"
-          style={{ borderTop: "1px solid oklch(0.98 0.01 85 / 25%)", color: "oklch(0.98 0.01 85 / 40%)" }}
+          style={{ borderTop: "1px solid oklch(0.98 0.01 85 / 25%)", color: "white" }}
         >
           <span>Digital marknadsföring & utveckling</span>
           <a
@@ -247,7 +247,7 @@ export default function App() {
             target="_blank"
             rel="noreferrer"
             className="transition-opacity hover:opacity-100"
-            style={{ color: "oklch(0.98 0.01 85 / 40%)" }}
+            style={{ color: "white" }}
           >
             LinkedIn
           </a>
